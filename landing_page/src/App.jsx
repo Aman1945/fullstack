@@ -106,17 +106,17 @@ const App = () => {
                     <ScreenshotCard 
                         title="Modern Login" 
                         image="https://raw.githubusercontent.com/Aman1945/fullstack/main/landing_page/src/assets/login_mockup.png" 
-                        fallback="file:///C:/Users/AIA/.gemini/antigravity/brain/ee280823-255c-467a-8b2c-53a9310466e6/app_login_mockup_1773851993642.png"
+                        fallback="./assets/login_mockup.png"
                     />
                     <ScreenshotCard 
                         title="Smart Dashboard" 
                         image="https://raw.githubusercontent.com/Aman1945/fullstack/main/landing_page/src/assets/dashboard_mockup.png" 
-                        fallback="file:///C:/Users/AIA/.gemini/antigravity/brain/ee280823-255c-467a-8b2c-53a9310466e6/app_dashboard_mockup_1773851953379.png"
+                        fallback="./assets/dashboard_mockup.png"
                     />
                     <ScreenshotCard 
                         title="Task Management" 
                         image="https://raw.githubusercontent.com/Aman1945/fullstack/main/landing_page/src/assets/tasks_mockup.png" 
-                        fallback="file:///C:/Users/AIA/.gemini/antigravity/brain/ee280823-255c-467a-8b2c-53a9310466e6/app_tasks_mockup_1773851972978.png"
+                        fallback="./assets/tasks_mockup.png"
                     />
                 </div>
             </section>
@@ -170,7 +170,7 @@ const App = () => {
                         </button>
                         {status.success && (
                             <p style={{ color: '#10b981', marginTop: '1rem', textAlign: 'center' }}>
-                                <CheckCircle2 size={16} inline /> Message sent successfully!
+                                <CheckCircle2 size={16} /> Message sent successfully!
                             </p>
                         )}
                         {status.error && (

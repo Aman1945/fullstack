@@ -5,9 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 
 class ApiService {
-  static final String baseUrl = Platform.isAndroid 
-      ? 'http://10.0.2.2:5000/api' 
-      : 'http://localhost:5000/api';
+  static const String baseUrl = 'https://fullstack-me1i.onrender.com/api';
 
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();

@@ -1,115 +1,101 @@
-# Task Manager Full-Stack Application
+# 🚀 TaskFlow – Full Stack Task Management System
 
-A comprehensive task management solution featuring a mobile app, a landing page, and a robust backend.
+A production-ready full-stack application featuring a Flutter mobile app, a React landing page, and a secure Node.js backend.
 
-## Project Structure
+---
 
-- `backend/`: Node.js + Express + MongoDB
-- `landing_page/`: React JS + Vite
-- `mobile_app/`: Flutter Mobile Application
+## 🛠️ Tech Stack
 
-## Setup Instructions (Local)
+* 📱 **Mobile App**: Flutter (Provider + Shared Preferences)
+* 🌐 **Frontend**: React JS (Vite + Vanilla CSS)
+* ⚙️ **Backend**: Node.js + Express
+* 🗄️ **Database**: MongoDB (Mongoose)
+* ☁️ **Deployment**: Render
 
-### 1. Backend Setup
-1. Navigate to the `backend` folder.
-2. Run `npm install`.
-3. Create a `.env` file and add your `MONGODB_URI` and `JWT_SECRET`.
-4. Run `npm start`.
+---
 
-### 2. Landing Page Setup
-1. Navigate to the `landing_page` folder.
-2. Run `npm install`.
-3. Run `npm run dev`.
-4. Access at `http://localhost:5173`.
+## 🚀 Live Demo
 
-### 3. Mobile App Setup
-1. Navigate to the `mobile_app` folder.
-2. Run `flutter pub get`.
-3. Update `baseUrl` in `lib/services/api_service.dart`.
-4. Run `flutter run`.
+* 🌐 **Live Website**: [https://fullstack-1-dsj4.onrender.com/](https://fullstack-1-dsj4.onrender.com/)
+* 📦 **Live Backend**: [https://fullstack-me1i.onrender.com](https://fullstack-me1i.onrender.com)
+* 📦 **APK Download**: [Link to Drive APK]
 
-## Deployment Instructions (Render)
+---
 
-### 1. Backend Deployment (Web Service)
-- **Root Directory**: `backend`
-- **Build Command**: `npm install`
-- **Start Command**: `node server.js`
-- **Environment Variables**:
-  - `MONGODB_URI`: (Your Atlas connection string)
-  - `JWT_SECRET`: `taskmanager_jwt_secret_key_2024`
-  - `PORT`: `5000`
+## ✨ Features
 
-### 2. Landing Page Deployment (Static Site)
-- **Root Directory**: `landing_page`
-- **Build Command**: `npm run build`
-- **Publish Directory**: `dist`
+* 🔐 **Secure JWT Authentication**: Stateless auth for both Web & Mobile.
+* 📊 **Dashboard Stats**: Real-time tracking of Total, Completed, and Pending tasks.
+* ✅ **Full CRUD Management**: Create, Read, Update, and Delete tasks with ease.
+* 🌐 **Lead Sync**: Website Contact Form entries appear instantly in the Mobile App.
+* 🔄 **Persistent Login**: Automatic session restoration via Shared Preferences.
+* 🎯 **Premium UI**: Ultra-clean "White + Clear Blue" theme with 30px geometry.
+* ⚡ **Performance**: Optimized backend with indexing and efficient Mongoose queries.
 
-### 3. Flutter App Update
-Update the `baseUrl` in `lib/services/api_service.dart` with your live Render URL:
-```dart
-static final String baseUrl = 'https://your-backend.onrender.com/api';
-```
+---
+
+## 🏗️ Architecture
+
+- **Flutter App** → Node.js API (Render) → MongoDB Atlas
+- **React Website** → Node.js API (Render) → MongoDB Atlas
+
+A single, secure backend serves both the customer-facing website and the internal productivity app with strict data isolation.
+
+---
+
+## 🔌 API Endpoints
+
+### **Authentication**
+- `POST /api/auth/register` : User signup
+- `POST /api/auth/login` : User login + JWT issuance
+
+### **Task Management**
+- `GET /api/tasks` : Fetch user-specific tasks
+- `POST /api/tasks` : Create a new task
+- `PUT /api/tasks/:id` : Update task details or status
+- `DELETE /api/tasks/:id` : Remove a task (secured)
+
+### **Website Contact**
+- `POST /api/contact` : Submit lead/enquiry from landing page
+
+---
 
 ## 🏗️ Architectural Decisions
 
-### Backend (Node.js & Express)
-- **Modular Architecture**: Follows the MVC (Model-View-Controller) pattern with a clear separation of concerns (Routes -> Middlewares -> Controllers -> Models).
-- **Security First**: 
-  - **JWT Authentication**: Implemented stateless authentication using JSON Web Tokens.
-  - **Password Hashing**: Uses `bcryptjs` with a salt factor of 10 to protect user credentials.
-  - **Protected Routes**: Custom `protect` middleware ensures only authenticated users access task data.
-  - **Data Isolation**: All database queries are scoped to the `req.user.id` to ensure users only see their own tasks.
-- **Database Optimization**: 
-  - **Indexing**: Added a compound-like index on the `user` field in the Task model to ensure $O(1)$ or $O(\log n)$ lookup performance as the user base grows.
-- **Error Handling**: Centralized error middleware captures all async errors and returns consistent JSON responses with appropriate HTTP status codes.
+### **Backend (Node.js)**
+- **MVC Pattern**: Modular structure (Models, Controllers, Routes) for high maintainability.
+- **Security**: Password hashing with `bcryptjs` and protected routes via JWT middleware.
+- **Filtering**: Scoped queries ensure users can only ever access their own data.
 
-### Frontend (React Landing Page)
-- **Modern Stack**: Built with **Vite** for ultra-fast development and optimized production bundles.
-- **Responsive Design**: Mobile-first approach using Vanilla CSS with modern Flexbox/Grid layouts.
-- **API Integration**: Decoupled service layer for handling contact form submissions to the shared backend.
+### **Frontend (Mobile & Web)**
+- **Vite (Web)**: Fast build times and optimized delivery.
+- **Provider (Mobile)**: Robust state management for reactive UI updates.
+- **Service Layer**: Decoupled API logic in both clients for easier testing and maintenance.
 
-### Mobile (Flutter Application)
-- **State Management**: Uses the **Provider** pattern for reactive UI updates and clean data flow.
-- **Persistence**: Implemented local storage using `shared_preferences` to maintain user sessions across app restarts (Persistent Login).
-- **Service Layer**: Clean encapsulation of API calls in a dedicated `ApiService` class.
-- **UI/UX**: Custom "White + Clear Blue" theme with a 30px border-radius design system for a premium mobile experience.
+---
 
-## 🔐 Security Considerations
-- **CORS Configuration**: Restricts API access to authorized origins only.
-- **Token Expiration**: JWTs are issued with a 30-day expiration to balance security and user experience.
-- **Input Validation**: Backend schemas enforce strict data types and mandatory fields to prevent malformed data entry.
+## ⚙️ Setup Instructions (Local)
 
-## 📂 Folder Structure
-```text
-├── backend/
-│   ├── controllers/   # Business logic
-│   ├── models/        # Database schemas
-│   ├── routes/        # Endpoint definitions
-│   ├── middleware/    # Auth and error handlers
-│   └── server.js      # Entry point
-├── mobile_app/
-│   ├── lib/
-│   │   ├── models/    # Data classes
-│   │   ├── providers/ # State management
-│   │   ├── screens/   # UI Screens
-│   │   └── services/  # API Logic
-├── landing_page/      # React Project
-└── README.md
-```
+### 1. Backend Setup
+1. Navigate to `backend/`
+2. Run `npm install`
+3. Create `.env` file with `MONGODB_URI` and `JWT_SECRET`.
+4. Run `npm start`
 
-## 🔄 Project Workflow & Integration
+### 2. Landing Page Setup
+1. Navigate to `landing_page/`
+2. Run `npm install`
+3. Run `npm run dev`
 
-1.  **User Journey**: Users can explore the product via the **React Landing Page**, which showcases features and provides a **Contact Us** lead-generation form.
-2.  **Lead Capture**: When a visitor submits the contact form (including the **Phone Number** field), the data is transmitted to the **Node.js Backend**.
-3.  **Mobile Synchronization**: Authenticated users in the **Flutter App** can navigate to the **Website Enquiries** screen to view these leads in real-time.
-4.  **Task Management**: Users manage their personal productivity via the Flutter app with full **CRUD** (Create, Read, Update, Delete) capabilities, all secured via **JWT** and persistent login logic.
+### 3. Mobile App Setup
+1. Navigate to `mobile_app/`
+2. Run `flutter pub get`
+3. Set `baseUrl` in `lib/services/api_service.dart` to your backend URL.
+4. Run `flutter run`
 
-## ✅ Evaluation Checklist Compliance
-- [x] Secure user registration and login
-- [x] JWT-based authentication
-- [x] Dashboard Stat Cards (Total, Completed, Pending)
-- [x] Full CRUD for tasks (Create, Update, Delete)
-- [x] Website Contact Form -> Backend integration
-- [x] **Bonus**: Phone Number field in contact form & Mobile app tracking.
-- [x] Responsive Landing Page
-- [x] Premium "White + Clear Blue" Theme (30px radius logic)
+---
+
+## 👨‍💻 Author
+
+**Aman Prajapati**
+*Full Stack Developer*

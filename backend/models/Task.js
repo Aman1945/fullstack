@@ -28,4 +28,7 @@ const taskSchema = new mongoose.Schema({
     },
 });
 
+// Add index for efficient filtering by user
+taskSchema.index({ user: 1 });
+
 module.exports = mongoose.model('Task', taskSchema);

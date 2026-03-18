@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/task_provider.dart';
 import 'package:intl/intl.dart';
+import '../models/contact_model.dart';
 
 class EnquiryScreen extends StatefulWidget {
   @override
   _EnquiryScreenState createState() => _EnquiryScreenState();
 }
 
-import '../models/contact_model.dart';
+
 
 class _EnquiryScreenState extends State<EnquiryScreen> {
   @override
@@ -30,7 +31,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
         centerTitle: true,
         iconTheme: IconThemeData(color: Color(0xFF0F172A)),
         title: Text('Website Enquiries', 
-            style: TextStyle(fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5)),
+            style: TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -0.5)),
       ),
       body: taskProvider.isLoading
           ? Center(child: CircularProgressIndicator(color: Color(0xFF0066FF)))

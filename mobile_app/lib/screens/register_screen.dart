@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   'Join TaskFlow',
                   style: TextStyle(
                     fontSize: 36,
-                    fontWeight: FontWeight.black,
+                    fontWeight: FontWeight.w400,
                     color: Color(0xFF0F172A),
                     letterSpacing: -1,
                   ),

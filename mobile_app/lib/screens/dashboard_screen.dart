@@ -31,7 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text('Dashboard', 
-            style: TextStyle(fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5)),
+            style: TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -0.5)),
         actions: [
           Container(
             margin: EdgeInsets.only(right: 12),
@@ -64,7 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               Text(
                 'Hello, ${user?.name ?? 'User'}',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -1),
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -1),
               ),
               SizedBox(height: 4),
               Text(
@@ -107,7 +107,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   Text(
                     'Quick Actions',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -0.5),
                   ),
                 ],
               ),
@@ -185,7 +185,7 @@ class _StatCard extends StatelessWidget {
           SizedBox(height: 20),
           Text(
             count.toString(),
-            style: TextStyle(fontSize: 36, fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -1),
+            style: TextStyle(fontSize: 36, fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -1),
           ),
           SizedBox(height: 2),
           Text(title, style: TextStyle(color: Color(0xFF64748B), fontWeight: FontWeight.w600, fontSize: 13)),
@@ -245,7 +245,7 @@ class _ActionButton extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title, 
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.black, color: Color(0xFF0F172A))),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Color(0xFF0F172A))),
                   SizedBox(height: 2),
                   Text(subtitle, style: TextStyle(color: Color(0xFF64748B), fontSize: 13, fontWeight: FontWeight.w500)),
                 ],

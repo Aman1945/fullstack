@@ -59,7 +59,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         centerTitle: true,
         iconTheme: IconThemeData(color: Color(0xFF0066FF)),
         title: Text(widget.task == null ? 'Create New Task' : 'Edit Task Details', 
-            style: TextStyle(fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5)),
+            style: TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -0.5)),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),

@@ -39,7 +39,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         centerTitle: true,
         iconTheme: IconThemeData(color: Color(0xFF0066FF)),
         title: Text('My Tasks', 
-            style: TextStyle(fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5)),
+            style: TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -0.5)),
       ),
       body: Column(
         children: [

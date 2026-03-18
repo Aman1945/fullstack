@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/task_model.dart';
+import '../models/contact_model.dart';
 import '../services/api_service.dart';
 
 class TaskProvider with ChangeNotifier {
   List<TaskModel> _tasks = [];
+  List<ContactModel> _contacts = [];
   bool _loading = false;
   Map<String, int> _stats = {'total': 0, 'completed': 0, 'pending': 0};
   final ApiService _apiService = ApiService();
 
   List<TaskModel> get tasks => _tasks;
+  List<ContactModel> get contacts => _contacts;
   bool get isLoading => _loading;
   Map<String, int> get stats => _stats;
 
@@ -24,6 +27,25 @@ class TaskProvider with ChangeNotifier {
             .map((item) => TaskModel.fromJson(item))
             .toList();
         _calculateStats();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      _loading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchContacts() async {
+    _loading = true;
+    notifyListeners();
+    try {
+      final response = await _apiService.get('/contact');
+      final data = jsonDecode(response.body);
+      if (data['success']) {
+        _contacts = (data['data'] as List)
+            .map((item) => ContactModel.fromJson(item))
+            .toList();
       }
     } catch (e) {
       debugPrint(e.toString());

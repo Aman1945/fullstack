@@ -32,11 +32,13 @@ class _TaskListScreenState extends State<TaskListScreen> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFF0F172A),
+      backgroundColor: Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('My Tasks', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        iconTheme: IconThemeData(color: Color(0xFF0F172A)),
+        title: Text('My Tasks', 
+            style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
       ),
       body: Column(
         children: [
@@ -59,6 +61,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF6366F1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => AddTaskScreen()),
         ),
@@ -68,8 +71,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
   }
 
   Widget _buildFilterBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -90,8 +94,12 @@ class _TaskListScreenState extends State<TaskListScreen> {
         if (selected) setState(() => _filter = value);
       },
       selectedColor: Color(0xFF6366F1),
-      backgroundColor: Colors.white.withOpacity(0.05),
-      labelStyle: TextStyle(color: isSelected ? Colors.white : Colors.white70),
+      backgroundColor: Color(0xFFF1F5F9),
+      labelStyle: TextStyle(
+        color: isSelected ? Colors.white : Color(0xFF64748B),
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 12),
     );
   }
 
@@ -100,9 +108,10 @@ class _TaskListScreenState extends State<TaskListScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.assignment_turned_in_outlined, size: 80, color: Colors.white24),
+          Icon(Icons.assignment_turned_in_outlined, size: 80, color: Colors.slate.shade100),
           SizedBox(height: 16),
-          Text('No tasks found', style: TextStyle(color: Colors.white70, fontSize: 18)),
+          Text('No tasks found', 
+              style: TextStyle(color: Colors.slate.shade300, fontSize: 18)),
         ],
       ),
     );
@@ -124,9 +133,10 @@ class _TaskCard extends StatelessWidget {
       background: Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.only(right: 20),
+        margin: EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: Colors.redAccent.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(16),
+          color: Colors.red.shade400,
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(Icons.delete, color: Colors.white),
       ),
@@ -134,34 +144,53 @@ class _TaskCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white.withOpacity(0.1)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: Offset(0, 4),
+            ),
+          ],
+          border: Border.all(color: Color(0xFFE2E8F0)),
         ),
         child: ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          leading: Checkbox(
-            value: task.status == 'completed',
-            activeColor: Color(0xFF6366F1),
-            onChanged: (_) => taskProvider.toggleTaskStatus(task),
+          leading: Transform.scale(
+            scale: 1.2,
+            child: Checkbox(
+              value: task.status == 'completed',
+              activeColor: Color(0xFF6366F1),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+              onChanged: (_) => taskProvider.toggleTaskStatus(task),
+            ),
           ),
           title: Text(
             task.title,
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xFF0F172A),
               fontWeight: FontWeight.bold,
+              fontSize: 16,
               decoration: task.status == 'completed' ? TextDecoration.lineThrough : null,
-              decorationColor: Colors.white38,
+              decorationColor: Color(0xFF94A3B8),
             ),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(task.description, style: TextStyle(color: Colors.white70)),
-              SizedBox(height: 4),
-              Text(
-                DateFormat('MMM dd, yyyy').format(task.createdAt),
-                style: TextStyle(color: Colors.white24, fontSize: 12),
+              Text(task.description, 
+                  style: TextStyle(color: Color(0xFF64748B), height: 1.4)),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(Icons.calendar_today, size: 12, color: Color(0xFF94A3B8)),
+                  SizedBox(width: 4),
+                  Text(
+                    DateFormat('MMM dd, yyyy').format(task.createdAt),
+                    style: TextStyle(color: Color(0xFF94A3B8), fontSize: 12),
+                  ),
+                ],
               ),
             ],
           ),
@@ -169,13 +198,15 @@ class _TaskCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                icon: Icon(Icons.edit_outlined, color: Colors.white70, size: 20),
+                visualDensity: VisualDensity.compact,
+                icon: Icon(Icons.edit_outlined, color: Color(0xFF6366F1), size: 20),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => AddTaskScreen(task: task)),
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.delete_outline, color: Colors.redAccent.withOpacity(0.7), size: 20),
+                visualDensity: VisualDensity.compact,
+                icon: Icon(Icons.delete_outline, color: Colors.red.shade300, size: 20),
                 onPressed: () => taskProvider.deleteTask(task.id),
               ),
             ],

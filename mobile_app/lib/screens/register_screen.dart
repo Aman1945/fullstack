@@ -36,64 +36,90 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
-      backgroundColor: Color(0xFF0F172A),
-      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+      backgroundColor: Color(0xFFF8FAFC),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent, 
+        elevation: 0,
+        iconTheme: IconThemeData(color: Color(0xFF0F172A)),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'Create Account',
+                  'Join TaskFlow',
                   style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontSize: 36,
+                    fontWeight: FontWeight.black,
+                    color: Color(0xFF0F172A),
+                    letterSpacing: -1,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'Start organizing your life today',
-                  style: TextStyle(color: Colors.white70),
+                  'Start your productivity journey with a premium experience',
+                  style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 48),
                 TextFormField(
                   controller: _nameController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: _inputDecoration('Full Name', Icons.person_outline),
+                  style: TextStyle(color: Color(0xFF0F172A)),
+                  decoration: _inputDecoration('Full Name', Icons.person_outline_rounded),
                   validator: (val) => val!.isEmpty ? 'Enter name' : null,
                 ),
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _emailController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: _inputDecoration('Email', Icons.email_outlined),
+                  style: TextStyle(color: Color(0xFF0F172A)),
+                  decoration: _inputDecoration('Email Address', Icons.alternate_email_rounded),
                   validator: (val) => val!.isEmpty ? 'Enter email' : null,
                 ),
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Color(0xFF0F172A)),
                   obscureText: true,
-                  decoration: _inputDecoration('Password', Icons.lock_outline),
+                  decoration: _inputDecoration('Secure Password', Icons.lock_outline_rounded),
                   validator: (val) => val!.length < 6 ? 'Password too short' : null,
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: authProvider.isLoading ? null : _register,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF6366F1),
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
                   child: authProvider.isLoading
-                    ? CircularProgressIndicator(color: Colors.white)
-                    : Text('Register', style: TextStyle(fontSize: 18, color: Colors.white)),
+                    ? SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                      )
+                    : Text('Create Premium Account', 
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ),
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Already a member?", style: TextStyle(color: Color(0xFF64748B))),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(color: Color(0xFF6366F1), fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -106,17 +132,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(color: Colors.white60),
-      prefixIcon: Icon(icon, color: Colors.white60),
+      labelStyle: TextStyle(color: Color(0xFF64748B)),
+      prefixIcon: Icon(icon, color: Color(0xFF6366F1), size: 22),
       filled: true,
-      fillColor: Colors.white.withOpacity(0.05),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+      fillColor: Colors.white,
+      contentPadding: EdgeInsets.all(20),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Color(0xFFE2E8F0)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFF6366F1)),
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Color(0xFF6366F1), width: 2),
       ),
     );
   }

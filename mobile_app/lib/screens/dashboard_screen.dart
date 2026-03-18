@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/task_provider.dart';
 import 'task_list_screen.dart';
+import 'enquiry_screen.dart';
 import 'login_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -25,14 +26,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final user = authProvider.user;
 
     return Scaffold(
-      backgroundColor: Color(0xFF0F172A),
+      backgroundColor: Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Dashboard', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        title: Text('Dashboard', 
+            style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout, color: Colors.white),
+            icon: Icon(Icons.logout, color: Color(0xFF0F172A)),
             onPressed: () {
               authProvider.logout();
               Navigator.of(context).pushReplacement(
@@ -52,12 +54,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               Text(
                 'Hello, ${user?.name ?? 'User'}!',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
               ),
               SizedBox(height: 8),
               Text(
                 'Here is your task summary',
-                style: TextStyle(color: Colors.white70, fontSize: 16),
+                style: TextStyle(color: Colors.slate.shade500, fontSize: 16),
               ),
               SizedBox(height: 32),
               Row(
@@ -75,7 +77,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: _StatCard(
                       title: 'Completed',
                       count: taskProvider.stats['completed'] ?? 0,
-                      color: Colors.greenAccent,
+                      color: Colors.green.shade600,
                       icon: Icons.check_circle_outline,
                     ),
                   ),
@@ -85,27 +87,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
               _StatCard(
                 title: 'Pending Tasks',
                 count: taskProvider.stats['pending'] ?? 0,
-                color: Colors.orangeAccent,
+                color: Colors.orange.shade600,
                 icon: Icons.pending_actions,
                 fullWidth: true,
               ),
               SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Quick Actions',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ],
+              Text(
+                'Quick Actions',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
               ),
               SizedBox(height: 16),
               _ActionButton(
                 title: 'Manage Tasks',
                 subtitle: 'Add, Edit or Delete your tasks',
                 icon: Icons.task,
+                color: Color(0xFF6366F1),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => TaskListScreen()),
+                ),
+              ),
+              SizedBox(height: 12),
+              _ActionButton(
+                title: 'Website Enquiries',
+                subtitle: 'Check messages from visitors',
+                icon: Icons.contact_page_outlined,
+                color: Color(0xFF8B5CF6),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => EnquiryScreen()),
                 ),
               ),
             ],
@@ -136,9 +144,16 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
+        border: Border.all(color: Color(0xFFE2E8F0)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,10 +162,10 @@ class _StatCard extends StatelessWidget {
           SizedBox(height: 16),
           Text(
             count.toString(),
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
           ),
           SizedBox(height: 4),
-          Text(title, style: TextStyle(color: Colors.white70)),
+          Text(title, style: TextStyle(color: Colors.slate.shade500)),
         ],
       ),
     );
@@ -161,12 +176,14 @@ class _ActionButton extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
+  final Color color;
   final VoidCallback onTap;
 
   const _ActionButton({
     required this.title,
     required this.subtitle,
     required this.icon,
+    required this.color,
     required this.onTap,
   });
 
@@ -178,31 +195,39 @@ class _ActionButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Color(0xFF6366F1).withOpacity(0.1),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Color(0xFF6366F1).withOpacity(0.2)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
+          border: Border.all(color: Color(0xFFE2E8F0)),
         ),
         child: Row(
           children: [
             Container(
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Color(0xFF6366F1),
+                color: color.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: Colors.white),
+              child: Icon(icon, color: color),
             ),
             SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-                  Text(subtitle, style: TextStyle(color: Colors.white70)),
+                  Text(title, 
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
+                  Text(subtitle, style: TextStyle(color: Colors.slate.shade500)),
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, size: 16, color: Colors.white38),
+            Icon(Icons.arrow_forward_ios, size: 16, color: Colors.slate.shade300),
           ],
         ),
       ),

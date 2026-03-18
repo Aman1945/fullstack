@@ -36,69 +36,90 @@ class _LoginScreenState extends State<LoginScreen> {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
-      backgroundColor: Color(0xFF0F172A),
+      backgroundColor: Color(0xFFF8FAFC),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 48),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 60),
-                Icon(Icons.task_alt, size: 80, color: Color(0xFF6366F1)),
-                SizedBox(height: 24),
+                SizedBox(height: 40),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF6366F1).withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.task_alt_rounded, size: 64, color: Color(0xFF6366F1)),
+                ),
+                SizedBox(height: 32),
                 Text(
-                  'Welcome Back',
+                  'TaskFlow',
                   style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontSize: 40,
+                    fontWeight: FontWeight.black,
+                    color: Color(0xFF0F172A),
+                    letterSpacing: -1,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'Sign in to manage your tasks',
-                  style: TextStyle(color: Colors.white70),
+                  'Sign in to your premium workspace',
+                  style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 48),
                 TextFormField(
                   controller: _emailController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: _inputDecoration('Email', Icons.email_outlined),
+                  style: TextStyle(color: Color(0xFF0F172A)),
+                  decoration: _inputDecoration('Email Address', Icons.alternate_email_rounded),
                   validator: (val) => val!.isEmpty ? 'Enter email' : null,
                 ),
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Color(0xFF0F172A)),
                   obscureText: true,
-                  decoration: _inputDecoration('Password', Icons.lock_outline),
+                  decoration: _inputDecoration('Password', Icons.lock_outline_rounded),
                   validator: (val) => val!.length < 6 ? 'Password too short' : null,
                 ),
-                SizedBox(height: 32),
+                SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: authProvider.isLoading ? null : _login,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF6366F1),
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
                   child: authProvider.isLoading
-                    ? CircularProgressIndicator(color: Colors.white)
-                    : Text('Login', style: TextStyle(fontSize: 18, color: Colors.white)),
+                    ? SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                      )
+                    : Text('Login to Dashboard', 
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
                 SizedBox(height: 24),
-                TextButton(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => RegisterScreen()),
-                  ),
-                  child: Text(
-                    "Don't have an account? Register",
-                    style: TextStyle(color: Color(0xFF6366F1)),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("New here?", style: TextStyle(color: Color(0xFF64748B))),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => RegisterScreen()),
+                      ),
+                      child: Text(
+                        "Create Account",
+                        style: TextStyle(color: Color(0xFF6366F1), fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -111,17 +132,18 @@ class _LoginScreenState extends State<LoginScreen> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(color: Colors.white60),
-      prefixIcon: Icon(icon, color: Colors.white60),
+      labelStyle: TextStyle(color: Color(0xFF64748B)),
+      prefixIcon: Icon(icon, color: Color(0xFF6366F1), size: 22),
       filled: true,
-      fillColor: Colors.white.withOpacity(0.05),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+      fillColor: Colors.white,
+      contentPadding: EdgeInsets.all(20),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Color(0xFFE2E8F0)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFF6366F1)),
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Color(0xFF6366F1), width: 2),
       ),
     );
   }

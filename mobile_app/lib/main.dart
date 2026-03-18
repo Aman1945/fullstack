@@ -21,13 +21,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Task Manager',
+      title: 'TaskFlow',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
         primarySwatch: Colors.indigo,
-        primaryColor: Color(0xFF6366F1),
-        fontFamily: 'Roboto', // Default, can be customized
+        fontFamily: 'Inter',
+        scaffoldBackgroundColor: Color(0xFFF8FAFC),
       ),
       home: Consumer<AuthProvider>(
         builder: (context, auth, _) {

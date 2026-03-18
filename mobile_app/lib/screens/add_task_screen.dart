@@ -52,12 +52,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0F172A),
+      backgroundColor: Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
+        iconTheme: IconThemeData(color: Color(0xFF0F172A)),
         title: Text(widget.task == null ? 'Add New Task' : 'Edit Task', 
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(24),
@@ -68,30 +69,36 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                style: TextStyle(color: Colors.white),
-                decoration: _inputDecoration('Task Title', Icons.title),
+                style: TextStyle(color: Color(0xFF0F172A)),
+                decoration: _inputDecoration('Task Title', Icons.title_rounded),
                 validator: (val) => val!.isEmpty ? 'Enter title' : null,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 24),
               TextFormField(
                 controller: _descController,
-                style: TextStyle(color: Colors.white),
-                maxLines: 4,
+                style: TextStyle(color: Color(0xFF0F172A)),
+                maxLines: 5,
                 decoration: _inputDecoration('Description', Icons.description_outlined),
                 validator: (val) => val!.isEmpty ? 'Enter description' : null,
               ),
-              SizedBox(height: 32),
+              SizedBox(height: 40),
               ElevatedButton(
                 onPressed: _loading ? null : _submit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF6366F1),
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 18),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                 ),
                 child: _loading
-                  ? CircularProgressIndicator(color: Colors.white)
-                  : Text(widget.task == null ? 'Create Task' : 'Update Task', 
-                      style: TextStyle(fontSize: 18, color: Colors.white)),
+                  ? SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                    )
+                  : Text(widget.task == null ? 'Create Task' : 'Save Changes', 
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -103,17 +110,26 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(color: Colors.white60),
-      prefixIcon: Icon(icon, color: Colors.white60),
+      labelStyle: TextStyle(color: Color(0xFF64748B)),
+      prefixIcon: Icon(icon, color: Color(0xFF6366F1)),
       filled: true,
-      fillColor: Colors.white.withOpacity(0.05),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+      fillColor: Colors.white,
+      contentPadding: EdgeInsets.all(20),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Color(0xFFE2E8F0)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Color(0xFF6366F1)),
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Color(0xFF6366F1), width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Colors.red.shade300),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: Colors.red.shade400, width: 2),
       ),
     );
   }

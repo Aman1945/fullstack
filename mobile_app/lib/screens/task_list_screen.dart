@@ -165,6 +165,21 @@ class _TaskCard extends StatelessWidget {
               ),
             ],
           ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: Icon(Icons.edit_outlined, color: Colors.white70, size: 20),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => AddTaskScreen(task: task)),
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.delete_outline, color: Colors.redAccent.withOpacity(0.7), size: 20),
+                onPressed: () => taskProvider.deleteTask(task.id),
+              ),
+            ],
+          ),
         ),
       ),
     );

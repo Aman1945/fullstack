@@ -89,4 +89,21 @@ class TaskProvider with ChangeNotifier {
       debugPrint(e.toString());
     }
   }
+
+  Future<String?> updateTask(String id, String title, String description) async {
+    try {
+      final response = await _apiService.put('/tasks/$id', {
+        'title': title,
+        'description': description,
+      });
+      final data = jsonDecode(response.body);
+      if (data['success']) {
+        await fetchTasks();
+        return null;
+      }
+      return data['message'];
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }

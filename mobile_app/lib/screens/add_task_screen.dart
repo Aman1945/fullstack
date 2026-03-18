@@ -3,21 +3,39 @@ import 'package:provider/provider.dart';
 import '../providers/task_provider.dart';
 
 class AddTaskScreen extends StatefulWidget {
+  final TaskModel? task;
+
+  const AddTaskScreen({Key? key, this.task}) : super(key: key);
+
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  final _titleController = TextEditingController();
-  final _descController = TextEditingController();
+  late TextEditingController _titleController;
+  late TextEditingController _descController;
   final _formKey = GlobalKey<FormState>();
   bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.task?.title ?? '');
+    _descController = TextEditingController(text: widget.task?.description ?? '');
+  }
 
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _loading = true);
-      final error = await Provider.of<TaskProvider>(context, listen: false)
-          .addTask(_titleController.text, _descController.text);
+      
+      String? error;
+      if (widget.task == null) {
+        error = await Provider.of<TaskProvider>(context, listen: false)
+            .addTask(_titleController.text, _descController.text);
+      } else {
+        error = await Provider.of<TaskProvider>(context, listen: false)
+            .updateTask(widget.task!.id, _titleController.text, _descController.text);
+      }
       
       if (error == null) {
         Navigator.of(context).pop();
@@ -37,7 +55,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Add New Task', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        title: Text(widget.task == null ? 'Add New Task' : 'Edit Task', 
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(24),
@@ -70,7 +89,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 ),
                 child: _loading
                   ? CircularProgressIndicator(color: Colors.white)
-                  : Text('Create Task', style: TextStyle(fontSize: 18, color: Colors.white)),
+                  : Text(widget.task == null ? 'Create Task' : 'Update Task', 
+                      style: TextStyle(fontSize: 18, color: Colors.white)),
               ),
             ],
           ),

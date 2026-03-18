@@ -23,7 +23,7 @@ class TaskProvider with ChangeNotifier {
         _tasks = (data['data'] as List)
             .map((item) => TaskModel.fromJson(item))
             .toList();
-        await fetchStats();
+        _calculateStats();
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -33,17 +33,17 @@ class TaskProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchStats() async {
-    try {
-      final response = await _apiService.get('/tasks/stats');
-      final data = jsonDecode(response.body);
-      if (data['success']) {
-        _stats = Map<String, int>.from(data['data']);
-        notifyListeners();
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+  void _calculateStats() {
+    int total = _tasks.length;
+    int completed = _tasks.where((t) => t.status == 'completed').length;
+    int pending = total - completed;
+    
+    _stats = {
+      'total': total,
+      'completed': completed,
+      'pending': pending,
+    };
+    notifyListeners();
   }
 
   Future<String?> addTask(String title, String description) async {

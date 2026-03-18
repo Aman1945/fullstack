@@ -15,7 +15,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<TaskProvider>(context, listen: false).fetchStats());
+        Provider.of<TaskProvider>(context, listen: false).fetchTasks());
   }
 
   @override
@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => taskProvider.fetchStats(),
+        onRefresh: () => taskProvider.fetchTasks(),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           padding: EdgeInsets.all(20),

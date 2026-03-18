@@ -32,6 +32,13 @@ A production-ready full-stack application featuring a Flutter mobile app, a Reac
 * 🎯 **Premium UI**: Ultra-clean "White + Clear Blue" theme with 30px geometry.
 * ⚡ **Performance**: Optimized backend with indexing and efficient Mongoose queries.
 
+## 🌐 Website-to-App Integration (Special Feature)
+
+This project demonstrates a real-world full-stack synchronization between the public-facing website and the private mobile app:
+1.  **Lead Capture**: When a visitor fills the **Contact Form** on the [React Website](https://fullstack-1-dsj4.onrender.com/), they provide their Name, Email, **Phone Number**, and Message.
+2.  **Instant Sync**: Data is transmitted to the **Node.js API** and stored in **MongoDB**.
+3.  **App Display**: The authenticated user on the **Flutter Mobile App** navigating to **"Website Enquiries"** can instantly view all leads, including the submitted phone numbers.
+
 ---
 
 ## 🏗️ Architecture

@@ -43,9 +43,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: IconButton(
               icon: Icon(Icons.logout_rounded, color: Color(0xFFEF4444), size: 20),
               onPressed: () {
-                authProvider.logout();
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => LoginScreen()),
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    title: Text('Logout?'),
+                    content: Text('Are you sure you want to leave?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('Cancel', style: TextStyle(color: Color(0xFF64748B))),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          authProvider.logout();
+                          Navigator.pop(context); // Close dialog
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (_) => LoginScreen()),
+                          );
+                        },
+                        child: Text('Logout', style: TextStyle(color: Color(0xFFEF4444), fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

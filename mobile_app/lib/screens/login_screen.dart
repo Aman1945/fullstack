@@ -86,17 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: _inputDecoration('Password', Icons.lock_outline_rounded),
                   validator: (val) => val!.isEmpty ? 'Enter password' : null,
                 ),
-                SizedBox(height: 12),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Color(0xFF0066FF), fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
                 SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: authProvider.isLoading ? null : _login,

@@ -97,6 +97,13 @@ static final String baseUrl = 'https://your-backend.onrender.com/api';
 └── README.md
 ```
 
+## 🔄 Project Workflow & Integration
+
+1.  **User Journey**: Users can explore the product via the **React Landing Page**, which showcases features and provides a **Contact Us** lead-generation form.
+2.  **Lead Capture**: When a visitor submits the contact form (including the **Phone Number** field), the data is transmitted to the **Node.js Backend**.
+3.  **Mobile Synchronization**: Authenticated users in the **Flutter App** can navigate to the **Website Enquiries** screen to view these leads in real-time.
+4.  **Task Management**: Users manage their personal productivity via the Flutter app with full **CRUD** (Create, Read, Update, Delete) capabilities, all secured via **JWT** and persistent login logic.
+
 ## ✅ Evaluation Checklist Compliance
 - [x] Secure user registration and login
 - [x] JWT-based authentication
@@ -105,4 +112,4 @@ static final String baseUrl = 'https://your-backend.onrender.com/api';
 - [x] Website Contact Form -> Backend integration
 - [x] **Bonus**: Phone Number field in contact form & Mobile app tracking.
 - [x] Responsive Landing Page
-- [x] Clean, high-end "White + Clear Blue" Theme
+- [x] Premium "White + Clear Blue" Theme (30px radius logic)

@@ -59,7 +59,37 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         centerTitle: true,
         iconTheme: IconThemeData(color: Color(0xFF0066FF)),
         title: Text(widget.task == null ? 'Create New Task' : 'Edit Task Details', 
-            style: TextStyle(fontWeight: FontWeight.w400, color: Color(0xFF0F172A), letterSpacing: -0.5)),
+            style: TextStyle(fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5)),
+        actions: [
+          if (widget.task != null)
+            IconButton(
+              icon: Icon(Icons.delete_outline_rounded, color: Color(0xFFEF4444)),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    title: Text('Delete Task?'),
+                    content: Text('Are you sure you want to remove this task?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('Cancel', style: TextStyle(color: Color(0xFF64748B))),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          await Provider.of<TaskProvider>(context, listen: false).deleteTask(widget.task!.id);
+                          Navigator.pop(context); // Close dialog
+                          Navigator.pop(context); // Go back to list
+                        },
+                        child: Text('Delete', style: TextStyle(color: Color(0xFFEF4444), fontWeight: FontWeight.bold)),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            )
+        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),

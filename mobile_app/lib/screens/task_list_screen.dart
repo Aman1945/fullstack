@@ -220,11 +220,42 @@ class _TaskCard extends StatelessWidget {
               ),
             ],
           ),
-          trailing: IconButton(
-            icon: Icon(Icons.chevron_right_rounded, color: Color(0xFFCBD5E1)),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => AddTaskScreen(task: task)),
-            ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: Icon(Icons.delete_outline_rounded, color: Color(0xFFEF4444), size: 22),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      title: Text('Delete Task?'),
+                      content: Text('This action cannot be undone.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Cancel', style: TextStyle(color: Color(0xFF64748B))),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            taskProvider.deleteTask(task.id);
+                            Navigator.pop(context);
+                          },
+                          child: Text('Delete', style: TextStyle(color: Color(0xFFEF4444), fontWeight: FontWeight.bold)),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.chevron_right_rounded, color: Color(0xFFCBD5E1)),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => AddTaskScreen(task: task)),
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -13,7 +13,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://fullstack-me1i.onrender.com/api';
 
 const App = () => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -103,10 +103,21 @@ const App = () => {
             <section className="section" style={{ background: 'rgba(255,255,255,0.02)' }}>
                 <h2 className="section-title">App Preview</h2>
                 <div className="screenshots">
-                    <ScreenshotPlaceholder title="Login Screen" content="Sleek authentication interface" />
-                    <ScreenshotPlaceholder title="Dashboard" content="Visual stats and user overview" />
-                    <ScreenshotPlaceholder title="Task Management" content="Effortless CRUD and filtering" />
-                    <ScreenshotPlaceholder title="Clean UI" content="Dark mode optimized for focus" />
+                    <ScreenshotCard 
+                        title="Modern Login" 
+                        image="https://raw.githubusercontent.com/Aman1945/fullstack/main/landing_page/src/assets/login_mockup.png" 
+                        fallback="file:///C:/Users/AIA/.gemini/antigravity/brain/ee280823-255c-467a-8b2c-53a9310466e6/app_login_mockup_1773851993642.png"
+                    />
+                    <ScreenshotCard 
+                        title="Smart Dashboard" 
+                        image="https://raw.githubusercontent.com/Aman1945/fullstack/main/landing_page/src/assets/dashboard_mockup.png" 
+                        fallback="file:///C:/Users/AIA/.gemini/antigravity/brain/ee280823-255c-467a-8b2c-53a9310466e6/app_dashboard_mockup_1773851953379.png"
+                    />
+                    <ScreenshotCard 
+                        title="Task Management" 
+                        image="https://raw.githubusercontent.com/Aman1945/fullstack/main/landing_page/src/assets/tasks_mockup.png" 
+                        fallback="file:///C:/Users/AIA/.gemini/antigravity/brain/ee280823-255c-467a-8b2c-53a9310466e6/app_tasks_mockup_1773851972978.png"
+                    />
                 </div>
             </section>
 
@@ -191,16 +202,22 @@ const FeatureCard = ({ icon, title, desc }) => (
     </motion.div>
 );
 
-const ScreenshotPlaceholder = ({ title, content }) => (
-    <div className="screenshot-card">
-        <div className="screenshot-placeholder">
-            <div>
-                <Smartphone size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
-                <h4>{title}</h4>
-                <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>{content}</p>
-            </div>
+const ScreenshotCard = ({ title, image, fallback }) => (
+    <motion.div 
+        className="screenshot-card"
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: 'spring', stiffness: 300 }}
+    >
+        <div className="screenshot-img-container">
+            <img 
+                src={image} 
+                onError={(e) => { e.target.src = fallback; }} 
+                alt={title} 
+                className="screenshot-img" 
+            />
         </div>
-    </div>
+        <h4 style={{ marginTop: '1rem', textAlign: 'center' }}>{title}</h4>
+    </motion.div>
 );
 
 export default App;

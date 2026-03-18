@@ -31,91 +31,107 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text('Dashboard', 
-            style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
+            style: TextStyle(fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5)),
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout, color: Color(0xFF0F172A)),
-            onPressed: () {
-              authProvider.logout();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => LoginScreen()),
-              );
-            },
+          Container(
+            margin: EdgeInsets.only(right: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: Color(0xFFE2E8F0)),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.logout_rounded, color: Color(0xFFEF4444), size: 20),
+              onPressed: () {
+                authProvider.logout();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => LoginScreen()),
+                );
+              },
+            ),
           )
         ],
       ),
       body: RefreshIndicator(
         onRefresh: () => taskProvider.fetchTasks(),
+        displacement: 20,
+        color: Color(0xFF0066FF),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hello, ${user?.name ?? 'User'}!',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
+                'Hello, ${user?.name ?? 'User'}',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -1),
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 4),
               Text(
-                'Here is your task summary',
-                style: TextStyle(color: Colors.slate.shade500, fontSize: 16),
+                'Let\'s see your productivity today',
+                style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
               ),
               SizedBox(height: 32),
               Row(
                 children: [
                   Expanded(
                     child: _StatCard(
-                      title: 'Total',
+                      title: 'Total Tasks',
                       count: taskProvider.stats['total'] ?? 0,
-                      color: Color(0xFF6366F1),
-                      icon: Icons.list_alt,
+                      color: Color(0xFF0066FF),
+                      icon: Icons.grid_view_rounded,
                     ),
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(width: 20),
                   Expanded(
                     child: _StatCard(
                       title: 'Completed',
                       count: taskProvider.stats['completed'] ?? 0,
-                      color: Colors.green.shade600,
-                      icon: Icons.check_circle_outline,
+                      color: Color(0xFF10B981),
+                      icon: Icons.check_circle_rounded,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 20),
               _StatCard(
                 title: 'Pending Tasks',
                 count: taskProvider.stats['pending'] ?? 0,
-                color: Colors.orange.shade600,
-                icon: Icons.pending_actions,
+                color: Color(0xFFF59E0B),
+                icon: Icons.timer_rounded,
                 fullWidth: true,
               ),
               SizedBox(height: 40),
-              Text(
-                'Quick Actions',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Quick Actions',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5),
+                  ),
+                ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 20),
               _ActionButton(
-                title: 'Manage Tasks',
-                subtitle: 'Add, Edit or Delete your tasks',
-                icon: Icons.task,
-                color: Color(0xFF6366F1),
+                title: 'Task Manager',
+                subtitle: 'Add, edit or organize your workflow',
+                icon: Icons.checklist_rounded,
+                color: Color(0xFF0066FF),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => TaskListScreen()),
                 ),
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 16),
               _ActionButton(
                 title: 'Website Enquiries',
-                subtitle: 'Check messages from visitors',
-                icon: Icons.contact_page_outlined,
-                color: Color(0xFF8B5CF6),
+                subtitle: 'New leads and contact requests',
+                icon: Icons.chat_bubble_outline_rounded,
+                color: Color(0xFF6366F1),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => EnquiryScreen()),
                 ),
               ),
+              SizedBox(height: 24),
             ],
           ),
         ),
@@ -142,15 +158,15 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: Offset(0, 5),
+            color: Color(0xFF0066FF).withOpacity(0.04),
+            blurRadius: 20,
+            offset: Offset(0, 8),
           ),
         ],
         border: Border.all(color: Color(0xFFE2E8F0)),
@@ -158,14 +174,21 @@ class _StatCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 32),
-          SizedBox(height: 16),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(icon, color: color, size: 24),
+          ),
+          SizedBox(height: 20),
           Text(
             count.toString(),
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
+            style: TextStyle(fontSize: 36, fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -1),
           ),
-          SizedBox(height: 4),
-          Text(title, style: TextStyle(color: Colors.slate.shade500)),
+          SizedBox(height: 2),
+          Text(title, style: TextStyle(color: Color(0xFF64748B), fontWeight: FontWeight.w600, fontSize: 13)),
         ],
       ),
     );
@@ -191,17 +214,17 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(30),
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              blurRadius: 10,
-              offset: Offset(0, 5),
+              color: Color(0xFF0066FF).withOpacity(0.04),
+              blurRadius: 20,
+              offset: Offset(0, 8),
             ),
           ],
           border: Border.all(color: Color(0xFFE2E8F0)),
@@ -209,25 +232,26 @@ class _ActionButton extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(12),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: color.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(20),
               ),
-              child: Icon(icon, color: color),
+              child: Icon(icon, color: color, size: 28),
             ),
-            SizedBox(width: 16),
+            SizedBox(width: 20),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title, 
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
-                  Text(subtitle, style: TextStyle(color: Colors.slate.shade500)),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.black, color: Color(0xFF0F172A))),
+                  SizedBox(height: 2),
+                  Text(subtitle, style: TextStyle(color: Color(0xFF64748B), fontSize: 13, fontWeight: FontWeight.w500)),
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, size: 16, color: Colors.slate.shade300),
+            Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Color(0xFFCBD5E1)),
           ],
         ),
       ),

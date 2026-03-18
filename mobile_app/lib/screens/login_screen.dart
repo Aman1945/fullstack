@@ -56,10 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 32),
                 Text(
-                  'TaskFlow',
+                  'Welcome Back',
                   style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.black,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w400,
                     color: Color(0xFF0F172A),
                     letterSpacing: -1,
                   ),
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'Sign in to your premium workspace',
+                  'Manage your tasks with a premium experience',
                   style: TextStyle(color: Color(0xFF64748B), fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
@@ -84,17 +84,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(color: Color(0xFF0F172A)),
                   obscureText: true,
                   decoration: _inputDecoration('Password', Icons.lock_outline_rounded),
-                  validator: (val) => val!.length < 6 ? 'Password too short' : null,
+                  validator: (val) => val!.isEmpty ? 'Enter password' : null,
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(color: Color(0xFF0066FF), fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: authProvider.isLoading ? null : _login,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF6366F1),
+                    backgroundColor: Color(0xFF0066FF),
                     foregroundColor: Colors.white,
                     elevation: 0,
                     padding: EdgeInsets.symmetric(vertical: 20),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   child: authProvider.isLoading
                     ? SizedBox(
@@ -102,21 +113,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 24,
                         child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                       )
-                    : Text('Login to Dashboard', 
+                    : Text('Sign In to Account', 
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
                 SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("New here?", style: TextStyle(color: Color(0xFF64748B))),
+                    Text("Don't have an account?", style: TextStyle(color: Color(0xFF64748B))),
                     TextButton(
                       onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => RegisterScreen()),
                       ),
                       child: Text(
-                        "Create Account",
-                        style: TextStyle(color: Color(0xFF6366F1), fontWeight: FontWeight.bold),
+                        "Create One",
+                        style: TextStyle(color: Color(0xFF0066FF), fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -133,17 +144,17 @@ class _LoginScreenState extends State<LoginScreen> {
     return InputDecoration(
       labelText: label,
       labelStyle: TextStyle(color: Color(0xFF64748B)),
-      prefixIcon: Icon(icon, color: Color(0xFF6366F1), size: 22),
+      prefixIcon: Icon(icon, color: Color(0xFF0066FF), size: 22),
       filled: true,
       fillColor: Colors.white,
       contentPadding: EdgeInsets.all(20),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: Color(0xFFE2E8F0)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: Color(0xFF6366F1), width: 2),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: Color(0xFF0066FF), width: 2),
       ),
     );
   }

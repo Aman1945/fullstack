@@ -56,12 +56,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Color(0xFF0F172A)),
-        title: Text(widget.task == null ? 'Add New Task' : 'Edit Task', 
-            style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Color(0xFF0066FF)),
+        title: Text(widget.task == null ? 'Create New Task' : 'Edit Task Details', 
+            style: TextStyle(fontWeight: FontWeight.black, color: Color(0xFF0F172A), letterSpacing: -0.5)),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(24),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         child: Form(
           key: _formKey,
           child: Column(
@@ -69,35 +70,36 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                style: TextStyle(color: Color(0xFF0F172A)),
-                decoration: _inputDecoration('Task Title', Icons.title_rounded),
-                validator: (val) => val!.isEmpty ? 'Enter title' : null,
+                style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600),
+                decoration: _inputDecoration('Task Title', Icons.edit_note_rounded),
+                validator: (val) => val!.isEmpty ? 'Please enter a title' : null,
               ),
               SizedBox(height: 24),
               TextFormField(
                 controller: _descController,
                 style: TextStyle(color: Color(0xFF0F172A)),
-                maxLines: 5,
-                decoration: _inputDecoration('Description', Icons.description_outlined),
-                validator: (val) => val!.isEmpty ? 'Enter description' : null,
+                maxLines: 6,
+                decoration: _inputDecoration('Task Description', Icons.description_rounded),
+                validator: (val) => val!.isEmpty ? 'Please enter a description' : null,
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 48),
               ElevatedButton(
                 onPressed: _loading ? null : _submit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF6366F1),
+                  backgroundColor: Color(0xFF0066FF),
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 18),
+                  padding: EdgeInsets.symmetric(vertical: 20),
                   elevation: 0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shadowColor: Color(0xFF0066FF).withOpacity(0.3),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 ),
                 child: _loading
                   ? SizedBox(
-                      height: 20,
-                      width: 20,
+                      height: 24,
+                      width: 24,
                       child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                     )
-                  : Text(widget.task == null ? 'Create Task' : 'Save Changes', 
+                  : Text(widget.task == null ? 'Create Task now' : 'Save Task Changes', 
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
             ],
@@ -110,26 +112,26 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(color: Color(0xFF64748B)),
-      prefixIcon: Icon(icon, color: Color(0xFF6366F1)),
+      labelStyle: TextStyle(color: Color(0xFF64748B), fontWeight: FontWeight.w500),
+      prefixIcon: Icon(icon, color: Color(0xFF0066FF), size: 24),
       filled: true,
       fillColor: Colors.white,
-      contentPadding: EdgeInsets.all(20),
+      contentPadding: EdgeInsets.all(24),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: Color(0xFFE2E8F0)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: Color(0xFF6366F1), width: 2),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: Color(0xFF0066FF), width: 2),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: Colors.red.shade300),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: Color(0xFFEF4444)),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: Colors.red.shade400, width: 2),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: Color(0xFFEF4444), width: 2),
       ),
     );
   }

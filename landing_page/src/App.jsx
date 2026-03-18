@@ -16,7 +16,7 @@ import {
 const API_BASE_URL = 'https://fullstack-me1i.onrender.com/api';
 
 const App = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [formData, setFormData] = useState({ name: '', email: '', message: '', phone: '' });
     const [status, setStatus] = useState({ loading: false, success: false, error: null });
 
     const handleInputChange = (e) => {
@@ -29,16 +29,16 @@ const App = () => {
         try {
             await axios.post(`${API_BASE_URL}/contact`, formData);
             setStatus({ loading: false, success: true, error: null });
-            setFormData({ name: '', email: '', message: '' });
+            setFormData({ name: '', email: '', message: '', phone: '' });
         } catch (err) {
             setStatus({ loading: false, success: false, error: err.response?.data?.message || 'Something went wrong' });
         }
     };
 
     return (
-        <div className="landing-page">
+        <div className="app">
             {/* Navbar */}
-            <nav className="nav">
+            <nav>
                 <div className="logo">TaskFlow</div>
                 <div className="nav-links">
                     <button className="btn btn-primary">Download App</button>
@@ -46,13 +46,20 @@ const App = () => {
             </nav>
 
             {/* Hero Section */}
-            <section className="hero">
+            <header className="hero">
+                <motion.div 
+                    className="badge"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                >
+                    Premium Productivity Suite
+                </motion.div>
                 <motion.h1 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    Master Your Day with <span className="gradient-text">TaskFlow</span>
+                    Master Your Day with <span style={{ color: 'var(--primary)' }}>TaskFlow</span>
                 </motion.h1>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -62,37 +69,44 @@ const App = () => {
                     The modern task manager designed for peak productivity. Organize, track, and complete tasks with ease.
                 </motion.p>
                 <motion.div
+                    className="cta-group"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
                     <button className="btn btn-primary" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
-                        Get Started <ArrowRight size={18} style={{ marginLeft: '8px', verticalAlign: 'middle' }} />
+                        Get Started Free <ArrowRight size={18} style={{ marginLeft: '8px', verticalAlign: 'middle' }} />
+                    </button>
+                    <button className="btn btn-secondary">
+                        View Demo
                     </button>
                 </motion.div>
-            </section>
+            </header>
 
             {/* Features Section */}
-            <section className="section">
-                <h2 className="section-title">Why Choose TaskFlow?</h2>
-                <div className="features-grid">
+            <section className="features">
+                <div className="section-header">
+                    <h2>Why Choose TaskFlow?</h2>
+                    <p style={{ color: 'var(--text-muted)' }}>Experience the most intuitive task management system.</p>
+                </div>
+                <div className="feature-grid">
                     <FeatureCard 
-                        icon={<Layout size={32} />} 
+                        icon={<Layout size={28} />} 
                         title="Intuitive Design" 
                         desc="Clean and minimal interface that keeps you focused on what matters most." 
                     />
                     <FeatureCard 
-                        icon={<Smartphone size={32} />} 
+                        icon={<Smartphone size={28} />} 
                         title="Cross-Platform" 
                         desc="Seamlessly sync across your mobile devices and stay productive on the go." 
                     />
                     <FeatureCard 
-                        icon={<ShieldCheck size={32} />} 
+                        icon={<ShieldCheck size={28} />} 
                         title="Secure & Private" 
                         desc="Your data is encrypted and secure with industry-standard authentication." 
                     />
                     <FeatureCard 
-                        icon={<Zap size={32} />} 
+                        icon={<Zap size={28} />} 
                         title="Real-time Stats" 
                         desc="Track your progress with beautiful dashboards and task statistics." 
                     />
@@ -100,8 +114,11 @@ const App = () => {
             </section>
 
             {/* Screenshots Section */}
-            <section className="section" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                <h2 className="section-title">App Preview</h2>
+            <section className="screenshots-section">
+                <div className="section-header">
+                    <h2>Everything in One Place</h2>
+                    <p style={{ color: 'var(--text-muted)' }}>Meticulously designed for a seamless user experience.</p>
+                </div>
                 <div className="screenshots">
                     <ScreenshotCard 
                         title="Modern Login" 
@@ -122,15 +139,17 @@ const App = () => {
             </section>
 
             {/* Contact Form Section */}
-            <section className="section" id="contact">
-                <div className="glass-card contact-container">
-                    <h2 style={{ marginBottom: '1rem' }}>Contact Us</h2>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-                        Have questions? We'd love to hear from you.
-                    </p>
+            <section className="contact" id="contact">
+                <div className="contact-container">
+                    <div className="section-header" style={{ textAlign: 'left', marginBottom: '40px' }}>
+                        <h2>Get in Touch</h2>
+                        <p style={{ color: 'var(--text-muted)' }}>
+                            Have questions? We'd love to hear from you.
+                        </p>
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label><User size={16} /> Name</label>
+                            <label>Full Name</label>
                             <input 
                                 type="text" 
                                 name="name" 
@@ -142,7 +161,7 @@ const App = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label><Mail size={16} /> Email</label>
+                            <label>Email Address</label>
                             <input 
                                 type="email" 
                                 name="email" 
@@ -154,27 +173,43 @@ const App = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label><MessageSquare size={16} /> Message</label>
+                            <label>Phone Number (Optional)</label>
+                            <input 
+                                type="tel" 
+                                name="phone" 
+                                className="form-input" 
+                                placeholder="+91 98765 43210" 
+                                value={formData.phone}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Your Message</label>
                             <textarea 
                                 name="message" 
                                 className="form-input" 
-                                rows="4" 
-                                placeholder="Your message here..." 
+                                rows="5" 
+                                placeholder="How can we help you?" 
                                 required
                                 value={formData.message}
                                 onChange={handleInputChange}
                             ></textarea>
                         </div>
-                        <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={status.loading}>
-                            {status.loading ? 'Sending...' : 'Send Message'}
+                        <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '16px' }} disabled={status.loading}>
+                            {status.loading ? 'Sending Request...' : 'Send Message'}
                         </button>
                         {status.success && (
-                            <p style={{ color: '#10b981', marginTop: '1rem', textAlign: 'center' }}>
-                                <CheckCircle2 size={16} /> Message sent successfully!
-                            </p>
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                style={{ color: '#059669', marginTop: '24px', textAlign: 'center', background: '#ECFDF5', padding: '16px', borderRadius: '12px' }}
+                            >
+                                <CheckCircle2 size={20} style={{ verticalAlign: 'middle', marginRight: '8px' }} /> 
+                                <strong>Success!</strong> Your message has been sent.
+                            </motion.div>
                         )}
                         {status.error && (
-                            <p style={{ color: '#f43f5e', marginTop: '1rem', textAlign: 'center' }}>
+                            <p style={{ color: '#EF4444', marginTop: '16px', textAlign: 'center' }}>
                                 {status.error}
                             </p>
                         )}
@@ -183,8 +218,8 @@ const App = () => {
             </section>
 
             {/* Footer */}
-            <footer style={{ padding: '3rem 5%', textAlign: 'center', borderTop: '1px solid var(--glass-border)' }}>
-                <p style={{ color: 'var(--text-muted)' }}>&copy; 2024 TaskFlow Application. Built with React &amp; Node.js.</p>
+            <footer>
+                <p>&copy; 2024 TaskFlow Premium. All rights reserved.</p>
             </footer>
         </div>
     );
@@ -192,9 +227,8 @@ const App = () => {
 
 const FeatureCard = ({ icon, title, desc }) => (
     <motion.div 
-        className="glass-card feature-card"
+        className="feature-card"
         whileHover={{ y: -10 }}
-        transition={{ type: 'spring', stiffness: 300 }}
     >
         <div className="feature-icon">{icon}</div>
         <h3>{title}</h3>
@@ -205,8 +239,7 @@ const FeatureCard = ({ icon, title, desc }) => (
 const ScreenshotCard = ({ title, image, fallback }) => (
     <motion.div 
         className="screenshot-card"
-        whileHover={{ scale: 1.05 }}
-        transition={{ type: 'spring', stiffness: 300 }}
+        whileHover={{ y: -5 }}
     >
         <div className="screenshot-img-container">
             <img 
@@ -214,9 +247,10 @@ const ScreenshotCard = ({ title, image, fallback }) => (
                 onError={(e) => { e.target.src = fallback; }} 
                 alt={title} 
                 className="screenshot-img" 
+                style={{ width: '100%', borderRadius: '24px' }}
             />
         </div>
-        <h4 style={{ marginTop: '1rem', textAlign: 'center' }}>{title}</h4>
+        <h4 style={{ marginTop: '1.5rem', textAlign: 'center', fontWeight: '700' }}>{title}</h4>
     </motion.div>
 );
 

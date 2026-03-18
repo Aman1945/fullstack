@@ -18,6 +18,10 @@ const contactSchema = new mongoose.Schema({
         required: [true, 'Please add a message'],
         maxlength: [1000, 'Message cannot be more than 1000 characters'],
     },
+    phone: {
+        type: String,
+        required: [false], // User can provide phone or not
+    },
     createdAt: {
         type: Date,
         default: Date.now,

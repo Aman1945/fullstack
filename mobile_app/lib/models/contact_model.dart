@@ -2,6 +2,7 @@ class ContactModel {
   final String id;
   final String name;
   final String email;
+  final String? phone;
   final String message;
   final DateTime createdAt;
 
@@ -9,6 +10,7 @@ class ContactModel {
     required this.id,
     required this.name,
     required this.email,
+    this.phone,
     required this.message,
     required this.createdAt,
   });
@@ -18,6 +20,7 @@ class ContactModel {
       id: json['_id'],
       name: json['name'],
       email: json['email'],
+      phone: json['phone'],
       message: json['message'],
       createdAt: DateTime.parse(json['createdAt']),
     );

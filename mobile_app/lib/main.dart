@@ -24,9 +24,14 @@ class MyApp extends StatelessWidget {
       title: 'TaskFlow',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primaryColor: Color(0xFF0066FF),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(0xFF0066FF),
+          primary: Color(0xFF0066FF),
+        ),
         fontFamily: 'Inter',
         scaffoldBackgroundColor: Color(0xFFF8FAFC),
+        useMaterial3: true,
       ),
       home: Consumer<AuthProvider>(
         builder: (context, auth, _) {

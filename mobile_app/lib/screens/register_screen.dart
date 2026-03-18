@@ -69,34 +69,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: 48),
                 TextFormField(
                   controller: _nameController,
-                  style: TextStyle(color: Color(0xFF0F172A)),
+                  style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600),
                   decoration: _inputDecoration('Full Name', Icons.person_outline_rounded),
-                  validator: (val) => val!.isEmpty ? 'Enter name' : null,
+                  validator: (val) => val!.isEmpty ? 'Please enter your name' : null,
                 ),
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _emailController,
-                  style: TextStyle(color: Color(0xFF0F172A)),
+                  style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600),
                   decoration: _inputDecoration('Email Address', Icons.alternate_email_rounded),
-                  validator: (val) => val!.isEmpty ? 'Enter email' : null,
+                  validator: (val) => val!.isEmpty ? 'Please enter your email' : null,
                 ),
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
-                  style: TextStyle(color: Color(0xFF0F172A)),
+                  style: TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w600),
                   obscureText: true,
                   decoration: _inputDecoration('Secure Password', Icons.lock_outline_rounded),
-                  validator: (val) => val!.length < 6 ? 'Password too short' : null,
+                  validator: (val) => val!.length < 6 ? 'Password must be at least 6 chars' : null,
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: authProvider.isLoading ? null : _register,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF6366F1),
+                    backgroundColor: Color(0xFF0066FF),
                     foregroundColor: Colors.white,
                     elevation: 0,
                     padding: EdgeInsets.symmetric(vertical: 20),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   ),
                   child: authProvider.isLoading
                     ? SizedBox(
@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: () => Navigator.of(context).pop(),
                       child: Text(
                         "Sign In",
-                        style: TextStyle(color: Color(0xFF6366F1), fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Color(0xFF0066FF), fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -132,18 +132,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(color: Color(0xFF64748B)),
-      prefixIcon: Icon(icon, color: Color(0xFF6366F1), size: 22),
+      labelStyle: TextStyle(color: Color(0xFF64748B), fontWeight: FontWeight.w500),
+      prefixIcon: Icon(icon, color: Color(0xFF0066FF), size: 22),
       filled: true,
       fillColor: Colors.white,
-      contentPadding: EdgeInsets.all(20),
+      contentPadding: EdgeInsets.all(22),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide(color: Color(0xFFE2E8F0)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: Color(0xFF6366F1), width: 2),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: Color(0xFF0066FF), width: 2),
       ),
     );
   }
